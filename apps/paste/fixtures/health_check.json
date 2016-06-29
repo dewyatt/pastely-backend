@@ -1,0 +1,9 @@
+[
+  {
+    "model": "paste.paste",
+    "pk": "HEALTHCK",
+    "fields": {
+      "title": "Health Check"
+    }
+  }
+]
