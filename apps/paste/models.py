@@ -1,11 +1,12 @@
 from django.db import models
+from django.utils import timezone
 
 class Paste(models.Model):
 	id = models.CharField(max_length=8, primary_key=True)
 	title = models.CharField(max_length=60, blank=True,
 		help_text='Optional title for this paste')
 
-	creation_date = models.DateTimeField(auto_now_add=True)
+	creation_date = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
 		return self.title or 'Untitled'
