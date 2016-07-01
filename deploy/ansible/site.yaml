@@ -1,0 +1,58 @@
+---
+- hosts: all
+  gather_facts: no
+  vars:
+    - app_username: pastelyapp
+    - app_group: pastelyapp
+    - app_uid: 500
+    - app_gid: 500
+    - app_path: /pastely
+    - git_url: https://github.com/dewyatt/pastely-backend.git
+    - venv_path: "{{ app_path }}/venv"
+  tasks:
+  # make sure we have our required arguments
+  - fail: msg="You have not supplied all required arguments"
+    when: (deploy_environment == "") or (git_sha1 == "")
+  # install required OS packages
+  - apk: update_cache=yes
+  - apk: upgrade=yes
+  - apk: name={{ item }} state=latest
+    with_items:
+      - python3
+      - py-pip
+      - py-virtualenv
+      - git
+      # for building uwsgi
+      - gcc
+      - musl-dev
+      - linux-headers
+      - python3-dev
+      # for psycopg2
+      - postgresql-dev
+
+  # only alpine:edge currently has shadow package w/useradd+groupadd
+  # so we'll use the command module as a workaround
+  #- group: name={{ app_group }} system=yes state=present
+  #- user: name={{ app_username }} group={{ app_group }} system=yes state=present
+  - command: addgroup -S {{ app_group }} -g {{ app_gid }}
+  - command: adduser -S {{ app_username }} -u {{ app_uid }}
+
+  - git: repo={{ git_url }} dest={{ app_path }} version={{ git_sha1 }}
+
+  # install requirements in our python virtualenv
+  - pip:
+      virtualenv_python=python3
+      virtualenv_site_packages=yes
+      virtualenv="{{ venv_path }}"
+      requirements="{{ app_path }}/requirements/{{ deploy_environment }}.txt"
+
+  # create our uwsgi.ini configuration file
+  - template: src=uwsgi.ini.j2
+              dest="{{ app_path }}/uwsgi.ini"
+              owner=root
+              group=root
+              mode=0644
+
+  - file: path=/tmp/deploy state=absent
+
+# vim: tw=80 ts=2:
