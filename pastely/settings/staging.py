@@ -1,4 +1,5 @@
 """
-
+Settings specific to the staging environment.
 """
-from .base import *
+
+from .production import *

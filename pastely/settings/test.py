@@ -2,4 +2,4 @@
 Settings for running tests
 """
 
-from .base import *
+from .local import *
