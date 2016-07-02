@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.4
 MAINTAINER Daniel Wyatt <Daniel.Wyatt@gmail.com>
 LABEL Description="Pastely Backend - Alpine Base" Version="1.0"
 
