@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pastely-database
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pastely
+        tier: database
+    spec:
+      containers:
+        - name: postgres
+          image: "postgres:9.5"
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: pastely-database-secret
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pastely-database-secret
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: pastely-database-secret
+                  key: database
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          ports:
+            - name: postgresql
+              containerPort: 5432
+          resources:
+            limits:
+              cpu: 0.5
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-storage
+          gcePersistentDisk:
+            pdName: pg-data
+            fsType: ext4

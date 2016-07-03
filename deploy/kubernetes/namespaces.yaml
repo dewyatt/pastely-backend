@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Namespace
+metadata:
+  name: pastely-staging
+  labels:
+    name: pastely-staging
+---
+apiVersion: extensions/v1beta1
+kind: Namespace
+metadata:
+  name: pastely-production
+  labels:
+    name: pastely-production
