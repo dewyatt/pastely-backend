@@ -4,13 +4,13 @@ chdir         = {{ app_path }}
 uid           = {{ app_uid }}
 gid           = {{ app_gid }}
 env           = DJANGO_SETTINGS_MODULE=pastely.settings.{{ deploy_environment }}
-processes     = 4
+processes     = 2
+threads       = 2
 harakiri      = 10
 module        = pastely.wsgi:application
 master        = True
 pidfile       = /tmp/pastely-master.pid
 vacuum        = True
-max-requests  = 5000
 home          = {{ venv_path }}
 vacuum        = True
 http-socket   = :8000
