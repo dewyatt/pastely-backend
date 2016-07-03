@@ -34,9 +34,6 @@ spec:
           ports:
             - name: postgresql
               containerPort: 5432
-          resources:
-            limits:
-              cpu: 0.5
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data

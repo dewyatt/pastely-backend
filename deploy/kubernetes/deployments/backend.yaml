@@ -12,13 +12,10 @@ spec:
     spec:
       containers:
         - name: pastely-backend
-          image: gcr.io/pastely-1357/pastely-backend:1e28d449cbbaaac62977029105f1d4a1a623b1d9.v1
+          image: gcr.io/pastely-1357/pastely-backend:1e28d449cbbaaac62977029105f1d4a1a623b1d9.v2
           ports:
             - name: http
               containerPort: 8000
-          resources:
-            limits:
-              memory: "100Mi"
           livenessProbe:
             httpGet:
               path: /api/v1/paste/view/HEALTHCK
