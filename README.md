@@ -8,6 +8,8 @@ The technologies used include:
 * Python
 * Django + Django Rest Framework
 * PostgreSQL
+* Docker
+* Ansible
 * Kubernetes
 
 # What is it?
