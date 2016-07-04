@@ -1,0 +1,21 @@
+node {
+    stage 'checkout'
+    git 'https://github.com/dewyatt/pastely-backend.git'
+
+    stage 'build-staging'
+    sh 'git rev-parse HEAD > GIT_COMMIT'
+    git_sha1=readFile('GIT_COMMIT')
+    sh "./build.sh staging $git_sha1"
+
+    stage 'deploy-staging'
+    sh "./deploy.sh staging $git_sha1"
+
+    deploy_prod=input message: 'Deployed to staging. Do you want to deploy to production?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Whether you want to now build and deploy this to the production environment.', name: 'deploy_to_prod']]
+    if (deploy_prod) {
+        stage 'build-production'
+        sh "./build.sh production $git_sha1"
+
+        stage 'deploy-production'
+        sh "./deploy.sh production $git_sha1"
+    }
+}
