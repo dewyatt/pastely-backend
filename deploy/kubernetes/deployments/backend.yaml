@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: pastely-backend
-          image: gcr.io/pastely-1357/pastely-backend:1e28d449cbbaaac62977029105f1d4a1a623b1d9.v2
+          image: gcr.io/pastely-1357/pastely-backend:603e7a961da56097c62b52d4bc2abd628b3835f1.staging.v1
           ports:
             - name: http
               containerPort: 8000

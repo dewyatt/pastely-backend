@@ -40,5 +40,6 @@ spec:
       volumes:
         - name: postgres-storage
           gcePersistentDisk:
-            pdName: pg-data
+            # Change manually!
+            pdName: pastely-pg-data-staging
             fsType: ext4
