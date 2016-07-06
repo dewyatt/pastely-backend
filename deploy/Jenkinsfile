@@ -2,6 +2,9 @@ node {
     stage 'checkout'
     git 'https://github.com/dewyatt/pastely-backend.git'
 
+    stage 'testing'
+    sh './deploy/test.sh'
+
     stage 'build-staging'
     sh 'git rev-parse HEAD | head -c 40 > GIT_COMMIT'
     git_sha1=readFile('GIT_COMMIT')
