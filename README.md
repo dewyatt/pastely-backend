@@ -1,6 +1,6 @@
 # Pastely Backend
 
-This is the backend of [Pastely](http://dewyatt.pastely.com), an online code paste service.
+This is the backend of Pastely, an online code paste service.
 
 The backend is composed of a couple HTTP endpoints that form the API.
 
